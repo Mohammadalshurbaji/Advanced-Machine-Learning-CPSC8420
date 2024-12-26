@@ -1,0 +1,98 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath,amsbsy,amssymb,verbatim,fullpage,ifthen,graphicx,bm,amsfonts,amsthm,url}
+\usepackage{graphicx}
+\usepackage{xcolor}
+%\usepackage[dvipsnames]{xcolor}
+\usepackage{algpseudocode}
+\newcommand{\mfile}[1]  {{\small \verbatiminput{./#1}}} % Jeff Fessler, input matlab file
+\newcommand{\tmop}[1]{\ensuremath{\operatorname{#1}}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\minimize}{\operatorname*{minimize\ }}
+\newcommand{\maximize}{\operatorname*{maximize}}
+\newcommand{\opdet}[1]{\operatorname{\textbf{det}}\left(#1\right)}
+\newcommand{\optr}[1]{\operatorname{\textbf{tr}}\left(#1\right)}
+\newcommand{\answer}[2][blue]{\ifdefined\AnswerDefine{\color{#1}\it#2}\fi}
+\newcommand{\mtx}[1]{\mathbf{#1}}
+\newcommand{\vct}[1]{\mathbf{#1}}
+\def \lg       {\langle}
+\def \rg       {\rangle}
+\def \mA {\mtx{A}}
+\def \mB {\mtx{B}}
+\def \mI {\mtx{I}}
+\def \mJ {\mtx{J}}
+\def \mU {\mtx{U}}
+\def \mS {\mtx{S}}
+\def \mV {\mtx{V}}
+\def \mW {\mtx{W}}
+\def \mLambda {\mtx{\Lambda}}
+\def \mSigma {\mtx{\Sigma}}
+\def \mX {\mtx{X}}
+\def \mY {\mtx{Y}}
+\def \mZ {\mtx{Z}}
+\def \zero     {\mathbf{0}}
+\def \vzero    {\vct{0}}
+\def \vone    {\vct{1}}
+\def \vu {\vct{u}}
+\def \vv {\vct{v}}
+\def \vx {\vct{x}}
+\def \vy {\vct{y}}
+\def \vz {\vct{z}}
+\def \vphi {\vct{\phi}}
+\def \vmu {\vct{\mu}}
+\def \R {\mathbb{R}}
+
+
+\usepackage{xspace}
+\makeatletter
+\DeclareRobustCommand\onedot{\futurelet\@let@token\@onedot}
+\def\@onedot{\ifx\@let@token.\else.\null\fi\xspace}
+
+\def\eg{\emph{e.g}\onedot} \def\Eg{\emph{E.g}\onedot}
+\def\ie{\emph{i.e}\onedot} \def\Ie{\emph{I.e}\onedot}
+\def\cf{\emph{c.f}\onedot} \def\Cf{\emph{C.f}\onedot}
+\def\etc{\emph{etc}\onedot} \def\vs{\emph{vs}\onedot}
+\def\wrt{w.r.t\onedot} \def\dof{d.o.f\onedot}
+\def\etal{\emph{et al}\onedot} \def\st{\emph{s.t}\onedot}
+\pagestyle{plain}
+
+\title{{\bf Homework Set 2, CPSC 8420, Fall 2024}} % Change to the appropriate homework number
+\author{\Large\underline{Your Name}}
+\date{\textbf{\Large\textcolor{red}{Due 10/28/2024, Monday, 11:59PM EST}}} % put your name in the LastName, FirstName format
+%\date{\today}
+
+\begin{document}
+	\maketitle
+	
+
+	\section*{Problem 1}
+	For PCA, from the perspective of maximizing variance (assume the data is already self-centered)
+	\begin{itemize}
+		\item show that the first column of $\mU$, where $[\mU,\mS]=svd(\mX^T\mX)$ will $\maximize \|\mX \bm{\phi}\|^2_2, \st \ \|\bm{\phi}\|_2=1$. (Note: you need prove why it is optimal than any other reasonable combinations of $\mU_i$, say $\hat{\bm{\phi}}=0.8*\mU(:,1)+0.6*\mU(:,2)$ which also  satisfies $\|\hat{\bm{\phi}}\|_2=1$.) 
+		\item show that the solution is not unique, say if $\bm{\phi}$ is the optimal solution, so is $-\bm{\phi}$. 
+		\item show that first $r$  columns of $\mU$, where $[\mU,\mS]=svd(\mX^T\mX)$ $\maximize \|\mX \bm{\mW}\|^2_F, \st \ \bm{\mW}^T\bm{\mW}=\mI_r$.
+		\item Assume the singular values are all different in $\mS$, then how many possible different $\mW$'s will maximize the objective above?
+	\end{itemize} 
+	
+
+
+	
+\newpage
+	\section*{Problem 2}
+	Given matrix $\mX\in\R^{n\times p}$ (assume each column is centered already), where $n$ denotes sample size while $p$ feature size. To conduct PCA, we need find eigenvectors to the  largest eigenvalues of $\mX^T\mX$, where usually the complexity is $\mathcal{O}(p^3)$. Apparently when $n\ll p$, this is not economic when $p$ is large. Please consider conducting PCA based on $\mX\mX^T$ and obtain the eigenvectors for $\mX^T\mX$ accordingly and use experiment to demonstrate the acceleration.
+		\newpage
+	
+	
+	
+	%\section
+	\section*{Problem 3}
+	Let $\theta^*\in\R^d$ be the ground truth linear model parameter and $\mX\in\R^{N\times d}$ be the observing matrix and each column of $\mX$ is independent. Assume the linear model is $\vy=\mX\theta^*+\epsilon$ where $\epsilon$ follows $Gaussian(0,\sigma^2\mI)$. Assume $\hat{\theta}=\arg\min\limits_\theta \|\mX\theta-\vy\|^2$.
+	\begin{itemize}
+		\item Please show that $\mX^T\mX$ is invertible.
+		\item Show that $MSE(\theta^*,\hat{\theta}):=E_\epsilon \{\|\theta^*-\hat{\theta}\|^2\}=\sigma^2 trace((\mX^T\mX)^{-1})$
+		\item Show that as $N$ increases, $MSE$ decreases. (hint: make use of `Woodbury matrix identity')
+	\end{itemize} 
+
+\end{document}
